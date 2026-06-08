@@ -1,0 +1,162 @@
+{
+  "name": "Case 02 - Consulta CNPJ",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "cnpj/:cnpj",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7a5b9aa2-210b-4dd5-b22b-1302ef9e2ce3",
+      "name": "Webhook",
+      "webhookId": "ad9f4e68-d344-49f3-a9bf-b43f3488e4cf"
+    },
+    {
+      "parameters": {
+        "url": "=https://brasilapi.com.br/api/cnpj/v1/{{$json.params.cnpj}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "3061fb7d-7877-4bd5-ac2d-4dc34ebcf4e7",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9462bfe4-7383-4163-bb9e-62f0375f6f35",
+              "name": "cnpj",
+              "value": "={{$json.cnpj}}",
+              "type": "string"
+            },
+            {
+              "id": "3023894e-6d1f-4808-b933-27335db64dc5",
+              "name": "razao_social",
+              "value": "={{$json.razao_social}}",
+              "type": "string"
+            },
+            {
+              "id": "3f81c504-98ea-4a2b-9976-03fff2e688aa",
+              "name": "nome_fantasia",
+              "value": "={{$json.nome_fantasia}}",
+              "type": "string"
+            },
+            {
+              "id": "49c23967-bbf8-449a-876a-62f009ca2ee7",
+              "name": "municipio",
+              "value": "={{$json.municipio}}",
+              "type": "string"
+            },
+            {
+              "id": "7ff79fb0-c0c5-4e12-8506-e82c884ecb5e",
+              "name": "uf",
+              "value": "={{$json.uf}}",
+              "type": "string"
+            },
+            {
+              "id": "ba52ea15-9ca8-4e03-82d5-8ad06caecc8e",
+              "name": "cep",
+              "value": "={{$json.cep}}",
+              "type": "string"
+            },
+            {
+              "id": "2eecbaba-7919-45d3-a665-eddc2849694a",
+              "name": "situacao",
+              "value": "={{$json.descricao_situacao_cadastral}}",
+              "type": "string"
+            },
+            {
+              "id": "329063b6-bb8a-4e2e-ac8d-30bb01a5e9ca",
+              "name": "porte",
+              "value": "={{$json.porte}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "ba4a5ae4-eed4-4d39-8354-dfb87a7dff7d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        624,
+        0
+      ],
+      "id": "90f87a9f-1510-423b-80f6-d5814bd04e59",
+      "name": "Respond to Webhook",
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "77bd6464-f525-4188-8fe7-ee9ec5fd3f11",
+  "meta": {
+    "instanceId": "70f9b831c05e84dff06c3a3c6d2261ee8278163d79fb391fc90829283401faa8"
+  },
+  "nodeGroups": [],
+  "id": "1XSyYggB8ENAftTB",
+  "tags": []
+}
